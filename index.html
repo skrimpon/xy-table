@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Animated Star</title>
+    <link rel="stylesheet" href="paper-js/examples/css/style.css">
+    <script type="text/javascript" src="paper-js/dist/paper-full.js"></script>
+    <script type="text/paperscript" canvas="canvas">
+        var layer = project.activeLayer;var drawGridRects = function(num_rectangles_wide, num_rectangles_tall, boundingRect) {
+    var width_per_rectangle = boundingRect.width / num_rectangles_wide;
+    var height_per_rectangle = boundingRect.height / num_rectangles_tall;
+    for (var i = 0; i < num_rectangles_wide; i++) {
+        for (var j = 0; j < num_rectangles_tall; j++) {
+            var aRect = new paper.Path.Rectangle(boundingRect.left + i * width_per_rectangle, boundingRect.top + j * height_per_rectangle, width_per_rectangle, height_per_rectangle);
+            aRect.strokeColor = 'lightgrey';
+        }
+    }
+}
+var b0 = paper.view.bounds;
+b0.x = 100;
+b0.y = 400;
+b0.width = 100;
+b0.height = 100;
+drawGridRects(10, 10, b0);
+var b1 = b0;
+b1.x = 400;
+b1.y = 100;
+drawGridRects(10, 10, b1);
+
+
+var x1 = 180;
+var y1 = 480;
+var len = 5;
+
+
+// Create a vector to show the direction we point at
+var vector = new Point(25, 25);
+var vectorStart = new Point(x1, y1);
+var arrowVector = vector.normalize(10);
+var end = vectorStart + vector;
+vectorItem = new Group([
+new Path([vectorStart, end]),
+new Path([
+end + arrowVector.rotate(135),
+end,
+end + arrowVector.rotate(-135)
+])
+]);
+vectorItem.strokeWidth = 0.75;
+vectorItem.strokeColor = '#e4141b';
+
+// Create a circle for x-y table 1
+var circlePath = new Path.Circle(new Point(x1, y1), len);
+circlePath.style = {
+fillColor: 'lightblue',
+strokeColor: 'black'
+};
+
+
+var x2 = 480;
+var y2 = 180;
+
+// Create a vector to show the direction we point at
+var vector1 = new Point(25, 25);
+var vectorStart1 = new Point(x2, y2);
+var arrowVector1 = vector1.normalize(10);
+var end1 = vectorStart1 + vector1;
+vectorItem1 = new Group([
+new Path([vectorStart1, end1]),
+new Path([
+end1 + arrowVector1.rotate(135),
+end1,
+end1 + arrowVector1.rotate(-135)
+])
+]);
+vectorItem1.strokeWidth = 0.75;
+vectorItem1.strokeColor = '#e4141b';
+
+// Create a circle for x-y table 1
+var circlePath1 = new Path.Circle(new Point(x2, y2), len);
+circlePath1.style = {
+fillColor: 'lightpink',
+strokeColor: 'black'
+};
+
+function onFrame(event) {
+// Every frame update the location of the X-Y table
+vectorItem.rotate(0,vectorStart)
+// Every frame update the location of the X-Y table
+vectorItem1.rotate(0,vectorStart1)
+}
+    </script>
+</head>
+<body>
+    <h1> COSMOS-SB1: X-Y Table </h1>
+    <canvas id="canvas" resize stats hidpi="off"></canvas>
+</body>
+</html>
